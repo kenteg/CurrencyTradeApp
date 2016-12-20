@@ -1,8 +1,10 @@
 package com.luxoft.currencytradeapp.service;
 
 import com.luxoft.currencytradeapp.entity.User;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+@Repository
 @Service
 public class UserServiceImpl implements UserService {
 
