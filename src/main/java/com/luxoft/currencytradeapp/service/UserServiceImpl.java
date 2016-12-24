@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         */
         User user;
         user = ur.findBylogin(login);
-        logger.debug("aaaaa\n"+user.getLogin()+user.getPassword());
+        logger.debug("finded user: "+user.getLogin()+user.getPassword());
         return user;
     }
 
