@@ -1,6 +1,8 @@
 package com.luxoft.currencytradeapp.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +17,17 @@ public class User {
         this.login = login;
         this.password = password;
     }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Account> accounts = new ArrayList<>();
 
     public User() {
 

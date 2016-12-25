@@ -17,14 +17,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository ur;
     @Override
     public User getUser(String login) {
-        /*User user = new User();
-        user.setLogin(login);
-        user.setPassword("7110eda4d09e062aa5e4a390b0a572ac0d2c0220");
+        /*
+        7110eda4d09e062aa5e4a390b0a572ac0d2c0220
         */
         User user;
         user = ur.findBylogin(login);
         logger.debug("finded user: "+user.getLogin()+user.getPassword());
         return user;
+    }
+
+    @Override
+    public void saveUser(User user) {
+        ur.save(user);
     }
 
 }
