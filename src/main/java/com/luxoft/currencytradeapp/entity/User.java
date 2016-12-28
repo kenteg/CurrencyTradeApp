@@ -26,7 +26,7 @@ public class User {
         return accounts;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Account> accounts = new ArrayList<>();
 
     public User() {
