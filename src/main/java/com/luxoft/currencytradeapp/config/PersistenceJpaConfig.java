@@ -37,13 +37,23 @@ public class PersistenceJpaConfig{
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
+        dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
+        dataSource.setUrl("jdbc:hsqldb:file:E:/LuxTask/CurrencyTradeApp/hdb/currencytrade");
+     //   dataSource.setUsername( "" );
+      //  dataSource.setPassword( "" );
+
+
+
+
+
+     /*   dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/currencytrade");
         dataSource.setUsername( "root" );
         dataSource.setPassword( "753357" );
         Properties info = new java.util.Properties();
         info.put ("serverTimezone","UTC");
-        dataSource.setConnectionProperties(info);
+        dataSource.setConnectionProperties(info);*/
         return dataSource;
     }
 
