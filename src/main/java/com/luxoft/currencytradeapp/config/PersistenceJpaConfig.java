@@ -39,7 +39,7 @@ public class PersistenceJpaConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
-        dataSource.setUrl("jdbc:hsqldb:file:P:/Users/omsk16/Documents/CurrencyTradeApp/hdb/currencytradedb");
+        dataSource.setUrl("jdbc:hsqldb:file:E:/LuxTask/CurrencyTradeApp/hdb/currencytrade");
         //   dataSource.setUsername( "" );
         //  dataSource.setPassword( "" );
         dataSource.setConnectionProperties(additionalProperties());

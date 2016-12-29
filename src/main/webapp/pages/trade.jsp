@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
@@ -22,12 +23,11 @@
 <body>
 <p>Ваш логин: <sec:authentication property="principal.username" /></p>
 <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
+<c:out value="${test}"/>
 <c:forEach var="account" items="${accounts}">
     <table>
     <tr>
-        <td><c:out value="${account.getBalance}"/></td>
-        <td><c:out value="${account.getCurrencyCode}"/></td>
-
+        <td><c:out value="${account.balance}"/></td>
     </tr>
     </table>
 </c:forEach>
