@@ -18,14 +18,14 @@ import java.util.TimeZone;
 
 @Configuration
 @EnableTransactionManagement
-public class PersistenceJpaConfig{
+public class PersistenceJpaConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPersistenceUnitName("entityManagerFactory");
-        em.setPackagesToScan(new String[] { "com.luxoft.currencytradeapp.entity" });
+        em.setPackagesToScan(new String[]{"com.luxoft.currencytradeapp.entity"});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -35,14 +35,14 @@ public class PersistenceJpaConfig{
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
-        dataSource.setUrl("jdbc:hsqldb:file:E:/LuxTask/CurrencyTradeApp/hdb/currencytrade");
-     //   dataSource.setUsername( "" );
-      //  dataSource.setPassword( "" );
-
+        dataSource.setUrl("jdbc:hsqldb:file:P:/Users/omsk16/Documents/CurrencyTradeApp/hdb/currencytradedb");
+        //   dataSource.setUsername( "" );
+        //  dataSource.setPassword( "" );
+        dataSource.setConnectionProperties(additionalProperties());
 
 
 
@@ -58,7 +58,7 @@ public class PersistenceJpaConfig{
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
 
@@ -66,14 +66,22 @@ public class PersistenceJpaConfig{
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
+/*
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        return properties;
+    }
+    */
+
+    Properties additionalProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         return properties;
     }
 }

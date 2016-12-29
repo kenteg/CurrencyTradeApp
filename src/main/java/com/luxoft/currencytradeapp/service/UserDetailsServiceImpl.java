@@ -1,4 +1,5 @@
 package com.luxoft.currencytradeapp.service;
+import com.luxoft.currencytradeapp.dao.UserRepository;
 import com.luxoft.currencytradeapp.entity.User;
 import com.luxoft.currencytradeapp.entity.enums.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;

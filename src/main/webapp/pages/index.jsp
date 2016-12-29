@@ -37,13 +37,6 @@
         <sec:authorize access="isAuthenticated()">
             <p>Ваш логин: <sec:authentication property="principal.username" /></p>
             <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
-            <c:forEach var="account" items="${accounts}">
-                <tr>
-                    <td><c:out value="${account.getBalance}"/></td>
-                    <td><c:out value="${account.getCurrencyCode}"/></td>
-
-                </tr>
-            </c:forEach>
         </sec:authorize>
     </div>
 

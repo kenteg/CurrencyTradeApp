@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/login?error")
+                .defaultSuccessUrl("/trade")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .permitAll();

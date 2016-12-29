@@ -9,7 +9,7 @@ public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     private String login;
     @Column (name = "hashpass")
     private String password;
@@ -18,6 +18,9 @@ public class User {
         this.password = password;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Account> accounts = new ArrayList<>();
+
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
@@ -25,9 +28,6 @@ public class User {
     public List<Account> getAccounts() {
         return accounts;
     }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Account> accounts = new ArrayList<>();
 
     public User() {
 
