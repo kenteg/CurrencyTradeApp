@@ -29,7 +29,6 @@ public class TradeController {
         modelAndView.setViewName("trade");
         User currentUser = userService.getUser(principal.getName());
         modelAndView.addObject("accounts",currentUser.getAccounts());
-        modelAndView.addObject("test","test_string!!!!!11");
         return modelAndView;
     }
 }
