@@ -23,11 +23,16 @@
 <body>
 <p>Ваш логин: <sec:authentication property="principal.username" /></p>
 <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
-<c:out value="${test}"/>
+<p><b>User accounts:</b></p>
 <c:forEach var="account" items="${accounts}">
-    <table>
+    <table >
+        <tr>
+            <th>Amount</th>
+            <th>Currency</th>
+        </tr>
     <tr>
-        <td><c:out value="${account.balance}"/></td>
+        <td ><c:out value="${account.balance.amount}"/></td>
+        <td><c:out value="${account.balance.currencyUnit}"/></td>
     </tr>
     </table>
 </c:forEach>
