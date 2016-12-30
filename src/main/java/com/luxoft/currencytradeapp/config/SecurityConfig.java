@@ -31,8 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/**").permitAll()
-                .anyRequest().permitAll()
+                .and();
+
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/pages/css/**","/pages/fonts/**","/pages/js/**").permitAll()
+                .anyRequest().authenticated()
                 .and();
 
         http.formLogin()
@@ -49,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .invalidateHttpSession(true);
+
+
 
     }
 
