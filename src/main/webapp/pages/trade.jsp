@@ -36,5 +36,7 @@
     </tr>
     </table>
 </c:forEach>
+
+<p>${rurtousd}</p>
 </body>
 </html>

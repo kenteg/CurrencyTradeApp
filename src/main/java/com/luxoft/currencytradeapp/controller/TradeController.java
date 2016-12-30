@@ -4,7 +4,9 @@ package com.luxoft.currencytradeapp.controller;
  * Created by omsk16 on 12/29/2016.
  */
 
+import com.luxoft.currencytradeapp.dao.ExchangeRateRepository;
 import com.luxoft.currencytradeapp.dao.UserRepository;
+import com.luxoft.currencytradeapp.entity.ExchangeRate;
 import com.luxoft.currencytradeapp.entity.User;
 import com.luxoft.currencytradeapp.service.UserService;
 import com.luxoft.currencytradeapp.service.UserServiceImpl;
@@ -23,11 +25,16 @@ import java.security.Principal;
 public class TradeController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    ExchangeRateRepository exchangeRateRepository;
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView start( Principal principal){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("trade");
         User currentUser = userService.getUser(principal.getName());
+        ExchangeRate exchangeRate = exchangeRateRepository.findByCurrency1AndCurrency2("RUR","USD");
+        modelAndView.addObject("rurtousd",exchangeRate.getRate());
         modelAndView.addObject("accounts",currentUser.getAccounts());
         return modelAndView;
     }
