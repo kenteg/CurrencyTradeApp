@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: kente
@@ -11,14 +12,15 @@
     <title>TradeForm</title>
 </head>
 <body>
+<p>Current buying currency: <c:out value="${selected_cur}"/> </p>
 <form action="trade_form">
-<input type="checkbox" name="ch">
 <input type="text" name="tx">
-<select name="sel">
-    <option value="one">1</option>
-    <option value="two">2</option>
+<select name="selectPayCur">
+    <c:forEach var="cur" items="${currencies}">
+        <option value="${cur}">${cur}</option>
+    </c:forEach>
 </select>
-<input type="submit" name="sb" value="ffffffffff">
+<input type="submit" name="sb" value="trade">
 </form>
 </body>
 </html>
