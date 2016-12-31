@@ -40,9 +40,10 @@
     </table>
 
 <form onSubmit="createLink(this);return false">
-<select name="sel">
-    <option value="one">1</option>
-    <option value="two">2</option>
+<select name="selected_cur">
+    <c:forEach var="cur" items="${currencies}">
+    <option value="${cur}">${cur}</option>
+    </c:forEach>
 </select>
 <input type="submit" name="sb" value="buy">
 </form>

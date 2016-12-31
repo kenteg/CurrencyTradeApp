@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/trade")
@@ -34,10 +36,14 @@ public class TradeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("trade");
         User currentUser = userService.getUser(principal.getName());
-        ExchangeRate exchangeRate = exchangeRateRepository.findByCurrency1AndCurrency2("USD","RUR");
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
+        Set<String> currencyCodes = new HashSet<>();
+        for(ExchangeRate rate:rates){
+            currencyCodes.add(rate.getCurrency1());
+            currencyCodes.add(rate.getCurrency2());
+        }
+        modelAndView.addObject("currencies",currencyCodes);
         modelAndView.addObject("rates",rates);
-        modelAndView.addObject("rurtousd",exchangeRate.getRate());
         modelAndView.addObject("accounts",currentUser.getAccounts());
         return modelAndView;
     }
