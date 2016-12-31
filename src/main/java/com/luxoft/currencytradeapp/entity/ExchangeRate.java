@@ -16,6 +16,16 @@ public class ExchangeRate {
     private String currency2;
     @Column(name = "rate")
     private float rate;
+    @Column(name ="reverse_rate")
+    private float reverse_rate;
+
+    public float getReverse_rate() {
+        return reverse_rate;
+    }
+
+    public void setReverse_rate(float reverse_rate) {
+        this.reverse_rate = reverse_rate;
+    }
 
     public ExchangeRate() {
     }
