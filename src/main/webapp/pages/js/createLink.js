@@ -6,5 +6,5 @@
             link+=form.elements[l].name+"="+form.elements[l].value
             if (l!=form.elements.length-1) link+="&"
         }
-        window.open("tradeform",'subwindow','HEIGHT=500,WIDTH=500')
+        window.open("tradeform"+link,'subwindow','HEIGHT=500,WIDTH=500')
     }
