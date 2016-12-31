@@ -18,25 +18,54 @@
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="pages/js/createLink.js"></script>
     <title>Trade</title>
 </head>
 <body>
 <p>Ваш логин: <sec:authentication property="principal.username" /></p>
 <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
 <p><b>User accounts:</b></p>
-<c:forEach var="account" items="${accounts}">
-    <table >
-        <tr>
-            <th>Amount</th>
-            <th>Currency</th>
-        </tr>
-    <tr>
-        <td ><c:out value="${account.balance.amount}"/></td>
-        <td><c:out value="${account.balance.currencyUnit}"/></td>
-    </tr>
-    </table>
-</c:forEach>
 
-<p>${rurtousd}</p>
+    <table class="table-bordered">
+        <tr>
+            <th>Currency</th>
+            <th>Amount</th>
+        </tr>
+        <c:forEach var="account" items="${accounts}">
+    <tr>
+        <td><c:out value="${account.balance.currencyUnit}"/></td>
+        <td><c:out value="${account.balance.amount}"/></td>
+    </tr>
+        </c:forEach>
+    </table>
+
+<form onSubmit="createLink(this);return false">
+<select name="sel">
+    <option value="one">1</option>
+    <option value="two">2</option>
+</select>
+<input type="submit" name="sb" value="buy">
+</form>
+
+
+<br>
+<p><b>Exchange Rates: </b></p>
+
+    <table class="table">
+        <tr>
+            <c:forEach var="rate" items="${rates}">
+            <th><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
+            </c:forEach>
+        </tr>
+
+        <tr>
+            <c:forEach var="rate" items="${rates}">
+        <td><c:out value="${rate.rate}"/></td>
+            </c:forEach>
+        </tr>
+
+
+    </table>
+
 </body>
 </html>
