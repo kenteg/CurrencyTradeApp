@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +45,20 @@ public class TradeFormController {
         }
         currencyCodes.remove(selected_cur);
         modelAndView.addObject("currencies",currencyCodes);
+        return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView trade(@RequestParam(value="currentBuy", required=false) String currentBuy,
+                              @RequestParam(value="amount", required=false) String amount,
+                              @RequestParam(value="selectPayCur", required=false) String selectPayCur
+    ){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("test");
+        float amountVal= Float.valueOf(amount);
+        modelAndView.addObject("test1",currentBuy);
+        modelAndView.addObject("test2",amountVal);
+        modelAndView.addObject("test3",selectPayCur);
         return modelAndView;
     }
 }
