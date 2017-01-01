@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    @Autowired
+    private final
     UserRepository userRepository;
+
+    @Autowired
+    public MainController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String start(Model model){
        /* User newUser = new User("newUser","7110eda4d09e062aa5e4a390b0a572ac0d2c0220");

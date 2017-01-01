@@ -4,7 +4,7 @@ package com.luxoft.currencytradeapp.config;
  * @author Khrishpens Viktor
  *         created Декабрь 18 2016
  */
-import com.luxoft.currencytradeapp.service.UserDetailsServiceImpl;
+import com.luxoft.currencytradeapp.service.user.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

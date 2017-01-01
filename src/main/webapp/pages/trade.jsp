@@ -22,7 +22,7 @@
     <title>Trade</title>
 </head>
 <body>
-<p>Ваш логин: <sec:authentication property="principal.username" /></p>
+<h3>Ваш логин: <sec:authentication property="principal.username" /></h3>
 <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
 <p><b>User accounts:</b></p>
 

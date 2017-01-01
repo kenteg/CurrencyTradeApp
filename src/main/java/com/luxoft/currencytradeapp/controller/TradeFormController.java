@@ -2,23 +2,17 @@ package com.luxoft.currencytradeapp.controller;
 
 import com.luxoft.currencytradeapp.dao.ExchangeRateRepository;
 import com.luxoft.currencytradeapp.entity.ExchangeRate;
-import com.luxoft.currencytradeapp.entity.User;
-import com.luxoft.currencytradeapp.service.UserService;
+import com.luxoft.currencytradeapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.hsqldb.lib.tar.TarHeaderField.mode;
 
 /**
  * @author Khrishpens Viktor
@@ -27,11 +21,18 @@ import static org.hsqldb.lib.tar.TarHeaderField.mode;
 @Controller
 @RequestMapping("/tradeform")
 public class TradeFormController {
-    @Autowired
+    private final
     UserService userService;
 
-    @Autowired
+    private final
     ExchangeRateRepository exchangeRateRepository;
+
+    @Autowired
+    public TradeFormController(UserService userService, ExchangeRateRepository exchangeRateRepository) {
+        this.userService = userService;
+        this.exchangeRateRepository = exchangeRateRepository;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView start(@RequestParam("selected_cur") String selected_cur){
         ModelAndView modelAndView = new ModelAndView();

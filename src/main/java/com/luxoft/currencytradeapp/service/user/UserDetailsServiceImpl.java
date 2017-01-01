@@ -1,5 +1,4 @@
-package com.luxoft.currencytradeapp.service;
-import com.luxoft.currencytradeapp.dao.UserRepository;
+package com.luxoft.currencytradeapp.service.user;
 import com.luxoft.currencytradeapp.entity.User;
 import com.luxoft.currencytradeapp.entity.enums.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;

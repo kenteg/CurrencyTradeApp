@@ -1,12 +1,9 @@
-package com.luxoft.currencytradeapp.service;
+package com.luxoft.currencytradeapp.service.user;
 
-import com.luxoft.currencytradeapp.dao.UserDao;
 import com.luxoft.currencytradeapp.dao.UserRepository;
 import com.luxoft.currencytradeapp.entity.User;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @Service

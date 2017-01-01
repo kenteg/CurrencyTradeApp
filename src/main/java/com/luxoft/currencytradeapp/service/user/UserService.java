@@ -1,4 +1,4 @@
-package com.luxoft.currencytradeapp.service;
+package com.luxoft.currencytradeapp.service.user;
 
 import com.luxoft.currencytradeapp.entity.User;
 
