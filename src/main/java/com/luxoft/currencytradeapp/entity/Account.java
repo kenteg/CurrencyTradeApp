@@ -1,5 +1,6 @@
 package com.luxoft.currencytradeapp.entity;
 
+import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 import org.joda.money.CurrencyUnit;
@@ -57,5 +58,15 @@ public class Account {
 
     public String getCurrencyCode(){
         return this.balance.getCurrencyUnit().getCurrencyCode();
+    }
+
+    public void deposit(Money amount){
+        this.balance=this.balance.plus(amount);
+    }
+
+    public void withdraw(Money amount) throws NotEnoughFundsException {
+        if (this.balance.isGreaterThan(amount)) {
+            this.balance=this.balance.minus(amount);
+        } else throw new NotEnoughFundsException(amount.getCurrencyUnit().toString());
     }
 }
