@@ -3,6 +3,7 @@ package domain;
 import com.luxoft.currencytradeapp.dao.UserDao;
 import com.luxoft.currencytradeapp.entity.Account;
 import com.luxoft.currencytradeapp.entity.User;
+import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.Before;
@@ -55,5 +56,24 @@ public class AccountTests {
                 "2000.00USD\n" +
                 "1000.00EUR\n",sb.toString());
         System.out.println(sb.toString());
+    }
+
+    @Test public void testWithdraw(){
+        CurrencyUnit rur = CurrencyUnit.of("RUR");
+        Money wAmount = Money.of(rur,1000);
+        try {
+            user.getAccounts().get(0).withdraw(wAmount);
+        }
+        catch (NotEnoughFundsException nf){
+            nf.printStackTrace();
+        }
+        assertEquals(user.getAccounts().get(0).getBalance(),Money.of(rur,2000));
+    }
+
+    @Test public void testDeposit(){
+        CurrencyUnit usd = CurrencyUnit.of("USD");
+        Money dAmount = Money.of(usd,1000);
+        user.getAccounts().get(1).deposit(dAmount);
+        assertEquals(user.getAccounts().get(1).getBalance(),Money.of(usd,3000));
     }
 }
