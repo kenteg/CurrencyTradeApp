@@ -13,8 +13,8 @@
 </head>
 <body>
 <p>Current buying currency: <c:out value="${selected_cur}"/> </p>
-<form action="trade_form" method="post">
-    <input type="hidden" name="currentbuy" value="${selected_cur}">
+<form action="trade/buy" method="post">
+    <input type="hidden" name="currentbuy" value="<c:out value="${selected_cur}"/>">
     <input type="text" name="amount">
     <select name="selectPayCur">
         <c:forEach var="cur" items="${currencies}">
