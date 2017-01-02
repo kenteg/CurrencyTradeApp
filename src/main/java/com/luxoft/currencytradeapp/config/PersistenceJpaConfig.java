@@ -11,6 +11,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.config.JtaTransactionManagerFactoryBean;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -27,7 +29,6 @@ public class PersistenceJpaConfig {
         em.setDataSource(dataSource());
         em.setPersistenceUnitName("entityManagerFactory");
         em.setPackagesToScan(new String[]{"com.luxoft.currencytradeapp.entity"});
-
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());
@@ -59,9 +60,11 @@ public class PersistenceJpaConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-
-        return new DataSourceTransactionManager(dataSource());
+    public PlatformTransactionManager transactionManager(){
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(
+                entityManagerFactory().getObject() );
+        return transactionManager;
     }
 
     @Bean

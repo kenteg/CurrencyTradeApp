@@ -33,6 +33,7 @@ public class ExchangeService {
         this.userService = userService;
     }
 
+    @Transactional
     public void trade(User currentUser,String currencyBuy, String currencySell,String amount) throws ExchangeRateNotFoundException, NotEnoughFundsException {
 
         Account accSell = findAccountByCurrency(currentUser,currencySell);
