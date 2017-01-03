@@ -1,8 +1,10 @@
 package com.luxoft.currencytradeapp.service.trade;
 
 import com.luxoft.currencytradeapp.dao.ExchangeRateRepository;
+import com.luxoft.currencytradeapp.dao.OperationRepository;
 import com.luxoft.currencytradeapp.entity.Account;
 import com.luxoft.currencytradeapp.entity.ExchangeRate;
+import com.luxoft.currencytradeapp.entity.Operation;
 import com.luxoft.currencytradeapp.entity.User;
 import com.luxoft.currencytradeapp.exceptions.ExchangeRateNotFoundException;
 import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
@@ -26,11 +28,13 @@ public class ExchangeService {
 
     private final ExchangeRateRepository exchangeRateRepository;
     private final UserService userService;
+    private final OperationRepository operationRepository;
 
     @Autowired
-    public ExchangeService(ExchangeRateRepository exchangeRateRepository, UserService userService) {
+    public ExchangeService(ExchangeRateRepository exchangeRateRepository, UserService userService, OperationRepository operationRepository) {
         this.exchangeRateRepository = exchangeRateRepository;
         this.userService = userService;
+        this.operationRepository = operationRepository;
     }
 
     @Transactional
@@ -43,7 +47,8 @@ public class ExchangeService {
         withdraw=withdraw.multipliedBy(rate, RoundingMode.HALF_EVEN);
         accSell.withdraw(withdraw);
         accBuy.deposit(Money.of(CurrencyUnit.getInstance(currencyBuy),new BigDecimal(amount)));
-        userService.saveUser(currentUser);
+        Operation currentOperation = new Operation(currencyBuy,currencySell,amount,withdraw.getAmount().toString(),String.valueOf(rate));
+        currentUser.getOperations().add(currentOperation);
     }
 
     private float findExchangeRate(String cur1, String cur2) throws ExchangeRateNotFoundException {

@@ -27,16 +27,20 @@
 <p><b>User accounts:</b></p>
 
     <table class="table-bordered">
+        <thead>
         <tr>
             <th>Currency</th>
             <th>Amount</th>
         </tr>
+        </thead>
+        <tbody>
         <c:forEach var="account" items="${accounts}">
-    <tr>
+            <tr>
         <td><c:out value="${account.balance.currencyUnit}"/></td>
         <td><c:out value="${account.balance.amount}"/></td>
     </tr>
         </c:forEach>
+        </tbody>
     </table>
 
 <form onSubmit="createLink(this);return false">
@@ -53,20 +57,48 @@
 <p><b>Exchange Rates: </b></p>
 
     <table class="table">
+        <thead>
         <tr>
             <c:forEach var="rate" items="${rates}">
             <th><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
             </c:forEach>
         </tr>
+        </thead>
 
+        <tbody>
         <tr>
             <c:forEach var="rate" items="${rates}">
         <td><c:out value="${rate.rate}"/></td>
             </c:forEach>
         </tr>
-
+        </tbody>
 
     </table>
+<table class="table table-bordered">
+    <caption class="caption">Operations History:</caption>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Currency Buy</th>
+        <th>Amount Buy </th>
+        <th>Currency Sell</th>
+        <th>Amount Sell</th>
+        <th>Rate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="operation" items="${operations}">
+        <tr>
+            <td><c:out value="${operation.id}"/></td>
+            <td><c:out value="${operation.currencyBuy}"/></td>
+            <td><c:out value="${operation.amountBuy}"/></td>
+            <td><c:out value="${operation.currencySell}"/></td>
+            <td><c:out value="${operation.amountSell}"/></td>
+            <td><c:out value="${operation.rate}"/></td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
 </body>
 </html>
