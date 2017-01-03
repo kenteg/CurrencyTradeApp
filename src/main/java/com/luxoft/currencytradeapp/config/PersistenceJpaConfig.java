@@ -20,7 +20,6 @@ import java.util.Properties;
 import java.util.TimeZone;
 
 @Configuration
-@EnableTransactionManagement
 public class PersistenceJpaConfig {
 
     @Bean
@@ -58,15 +57,16 @@ public class PersistenceJpaConfig {
         dataSource.setConnectionProperties(info);*/
         return dataSource;
     }
-
+/*
     @Bean
     public PlatformTransactionManager transactionManager(){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
                 entityManagerFactory().getObject() );
+        transactionManager.setDataSource(dataSource());
         return transactionManager;
     }
-
+*/
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
