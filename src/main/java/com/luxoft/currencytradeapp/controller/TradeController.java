@@ -5,7 +5,9 @@ package com.luxoft.currencytradeapp.controller;
  */
 
 import com.luxoft.currencytradeapp.dao.ExchangeRateRepository;
+import com.luxoft.currencytradeapp.dao.OperationRepository;
 import com.luxoft.currencytradeapp.entity.ExchangeRate;
+import com.luxoft.currencytradeapp.entity.Operation;
 import com.luxoft.currencytradeapp.entity.User;
 import com.luxoft.currencytradeapp.exceptions.ExchangeRateNotFoundException;
 import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
@@ -13,6 +15,7 @@ import com.luxoft.currencytradeapp.service.trade.ExchangeService;
 import com.luxoft.currencytradeapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,17 +28,21 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/trade")
+@Transactional
 public class TradeController {
     private final
     UserService userService;
-
     private final
     ExchangeRateRepository exchangeRateRepository;
+    private final
+    OperationRepository operationRepository;
+
 
     @Autowired
-    public TradeController(UserService userService, ExchangeRateRepository exchangeRateRepository) {
+    public TradeController(UserService userService, ExchangeRateRepository exchangeRateRepository, OperationRepository operationRepository) {
         this.userService = userService;
         this.exchangeRateRepository = exchangeRateRepository;
+        this.operationRepository = operationRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -49,6 +56,9 @@ public class TradeController {
             currencyCodes.add(rate.getCurrency1());
             currencyCodes.add(rate.getCurrency2());
         }
+        List<Operation> operations = operationRepository.findAll();
+
+        modelAndView.addObject("operations",operations);
         modelAndView.addObject("currencies",currencyCodes);
         modelAndView.addObject("rates",rates);
         modelAndView.addObject("accounts",currentUser.getAccounts());
@@ -63,7 +73,7 @@ public class TradeController {
     ){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("test");
-        ExchangeService exService = new ExchangeService(exchangeRateRepository, userService);
+        ExchangeService exService = new ExchangeService(exchangeRateRepository, userService, operationRepository);
         User currentUser = userService.getUser(principal.getName());
         try {
             exService.trade(currentUser,currentBuy,selectPayCur,amount);
