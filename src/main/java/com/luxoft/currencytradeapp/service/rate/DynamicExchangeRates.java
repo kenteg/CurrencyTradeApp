@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
@@ -28,6 +29,7 @@ public class DynamicExchangeRates {
 
 
     @Scheduled(fixedDelay = 30000)
+    @Transactional
     public void ChangeRates(){
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
 
@@ -38,11 +40,12 @@ public class DynamicExchangeRates {
             if(plusminus < 0.5){
             rate.setRate(curRate-delta);
             rate.setReverse_rate(1/rate.getRate());
-            exchangeRateRepository.save(rate);}
+                }
             else {
                 rate.setRate(curRate+delta);
                 rate.setReverse_rate(1/rate.getRate());
-                exchangeRateRepository.save(rate);}
+                //exchangeRateRepository.save(rate);
+                }
         }
     }
 
