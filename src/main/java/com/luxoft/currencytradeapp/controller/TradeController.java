@@ -14,13 +14,17 @@ import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
 import com.luxoft.currencytradeapp.service.trade.ExchangeService;
 import com.luxoft.currencytradeapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.enterprise.inject.Produces;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
@@ -83,4 +87,12 @@ public class TradeController {
 
         return modelAndView;
     }
+
+
+    @RequestMapping(value = "/rates",method = RequestMethod.GET,produces = "application/json")
+    public  @ResponseBody List<ExchangeRate> allRates(){
+        return exchangeRateRepository.findAll();
+    }
+
+
 }
