@@ -27,14 +27,10 @@ import java.math.RoundingMode;
 public class ExchangeService {
 
     private final ExchangeRateRepository exchangeRateRepository;
-    private final UserService userService;
-    private final OperationRepository operationRepository;
 
     @Autowired
     public ExchangeService(ExchangeRateRepository exchangeRateRepository, UserService userService, OperationRepository operationRepository) {
         this.exchangeRateRepository = exchangeRateRepository;
-        this.userService = userService;
-        this.operationRepository = operationRepository;
     }
 
     @Transactional
