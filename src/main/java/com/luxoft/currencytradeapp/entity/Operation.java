@@ -23,8 +23,6 @@ public class Operation {
     private String amountSell;
     @Column(name = "rate")
     private String rate;
-    @ManyToOne
-    private User user;
 
     public String getRate() {
         return rate;
@@ -87,11 +85,4 @@ public class Operation {
         this.amountSell = amountSell;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

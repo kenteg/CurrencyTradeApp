@@ -26,15 +26,12 @@ import java.util.Set;
 @Controller
 @RequestMapping("/tradeform")
 public class TradeFormController {
-    private final
-    UserService userService;
 
     private final
     ExchangeRateRepository exchangeRateRepository;
 
     @Autowired
-    public TradeFormController(UserService userService, ExchangeRateRepository exchangeRateRepository) {
-        this.userService = userService;
+    public TradeFormController(ExchangeRateRepository exchangeRateRepository) {
         this.exchangeRateRepository = exchangeRateRepository;
     }
 
