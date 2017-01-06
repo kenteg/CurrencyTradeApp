@@ -2,6 +2,9 @@ package com.luxoft.currencytradeapp.dao;
 
 import com.luxoft.currencytradeapp.entity.ExchangeRate;
 import com.luxoft.currencytradeapp.entity.Operation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,4 +15,5 @@ import java.util.List;
  */
 public interface OperationRepository extends CrudRepository<Operation,Integer> {
     List<Operation> findAll();
+    Page<Operation> findAll(Pageable pageable);
 }

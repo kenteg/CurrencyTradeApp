@@ -14,6 +14,9 @@ import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
 import com.luxoft.currencytradeapp.service.trade.ExchangeService;
 import com.luxoft.currencytradeapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,8 +63,8 @@ public class TradeController {
             currencyCodes.add(rate.getCurrency1());
             currencyCodes.add(rate.getCurrency2());
         }
+        PageRequest pagReq = new PageRequest(1,20);
         List<Operation> operations = operationRepository.findAll();
-
         modelAndView.addObject("operations",operations);
         modelAndView.addObject("currencies",currencyCodes);
         modelAndView.addObject("rates",rates);
