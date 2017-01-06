@@ -15,6 +15,9 @@
     <!-- Bootstrap core CSS -->
     <link href="<c:url value="/pages/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="/pages/css/jumbotron-narrow.css" />" rel="stylesheet">
+    <link href="<c:url value="/pages/css/bootstrap-select.css" />" rel="stylesheet">
+    <script src="pages/js/bootstrap-select.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -44,12 +47,12 @@
     </table>
 
 <form onSubmit="createLink(this);return false">
-<select name="selected_cur">
+<select class="bootstrap-select" name="selected_cur">
     <c:forEach var="cur" items="${currencies}">
     <option value="${cur}">${cur}</option>
     </c:forEach>
 </select>
-<input type="submit" name="sb" value="buy">
+<input type="submit" class="btn btn-success" name="sb" value="buy">
 </form>
 
 
