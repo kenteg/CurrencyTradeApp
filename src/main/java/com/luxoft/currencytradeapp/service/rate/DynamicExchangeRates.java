@@ -37,14 +37,17 @@ public class DynamicExchangeRates {
             float curRate = rate.getRate();
             float plusminus = rnd.nextFloat();
             int delta = randomInRange(0,59);
+            float fdelta=(float)delta/100;
             if(plusminus < 0.5){
-            rate.setRate(curRate-delta);
+                if((curRate-fdelta)<=0){
+                    return;
+                }
+            rate.setRate(curRate-fdelta);
             rate.setReverse_rate(1/rate.getRate());
                 }
             else {
-                rate.setRate(curRate+delta);
+                rate.setRate(curRate+fdelta);
                 rate.setReverse_rate(1/rate.getRate());
-                //exchangeRateRepository.save(rate);
                 }
         }
     }
