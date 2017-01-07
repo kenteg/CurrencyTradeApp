@@ -38,8 +38,9 @@ public class DynamicExchangeRates {
             float plusminus = rnd.nextFloat();
             int delta = randomInRange(0,59);
             float fdelta=(float)delta/100;
+            fdelta= (float) (Math.round(fdelta*100.0)/100.0);
             if(plusminus < 0.5){
-                if((curRate-fdelta)<=0){
+                if((curRate-fdelta)<0){
                     return;
                 }
             rate.setRate(curRate-fdelta);
