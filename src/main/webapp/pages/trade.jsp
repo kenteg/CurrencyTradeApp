@@ -1,13 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: omsk16
-  Date: 12/29/2016
-  Time: 10:43 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -55,6 +48,7 @@
 <input type="submit" class="btn btn-success" name="sb" value="buy">
 </form>
 
+<p><c:out value="${exception}"/> </p>
 
 <br>
 <p><b>Exchange Rates: </b></p>
@@ -77,31 +71,43 @@
         </tbody>
 
     </table>
+
+
 <table class="table table-bordered">
-    <caption class="caption">Operations History:</caption>
+    <caption class="caption">Operations History(Last 20):</caption>
     <thead>
     <tr>
         <th>#</th>
         <th>Currency Buy</th>
-        <th>Amount Buy </th>
         <th>Currency Sell</th>
+        <th>Amount Buy </th>
         <th>Amount Sell</th>
         <th>Rate</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="operation" items="${operations}">
+    <c:forEach var="operation" items="${page.content}">
         <tr>
             <td><c:out value="${operation.id}"/></td>
             <td><c:out value="${operation.currencyBuy}"/></td>
-            <td><c:out value="${operation.amountBuy}"/></td>
             <td><c:out value="${operation.currencySell}"/></td>
+            <td><c:out value="${operation.amountBuy}"/></td>
             <td><c:out value="${operation.amountSell}"/></td>
             <td><c:out value="${operation.rate}"/></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<c:forEach begin="1" end="${total}" var="i">
+    <c:choose>
+        <c:when test="${currentpage eq i}">
+            <button type="button" onclick="location.href='?page=${i}';"><b>${i}</b></b></button>
+        </c:when>
+        <c:otherwise>
+    <button type="button" onclick="location.href='?page=${i}';">${i}</button>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
 
 </body>
 </html>

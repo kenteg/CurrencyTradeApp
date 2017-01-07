@@ -53,7 +53,7 @@ public class TradeController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView start( Principal principal){
+    public ModelAndView start(Principal principal, @RequestParam(value = "page", required = false) Integer pageNum){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("trade");
         User currentUser = userService.getUser(principal.getName());
@@ -63,9 +63,12 @@ public class TradeController {
             currencyCodes.add(rate.getCurrency1());
             currencyCodes.add(rate.getCurrency2());
         }
-        PageRequest pagReq = new PageRequest(1,20);
-        List<Operation> operations = operationRepository.findAll();
-        modelAndView.addObject("operations",operations);
+        if (pageNum==null) {pageNum=1;};
+        PageRequest pagReq = new PageRequest(pageNum-1,20, Sort.Direction.DESC,"Id");
+        Page page = operationRepository.findAll(pagReq);
+        modelAndView.addObject("currentpage",pageNum);
+        modelAndView.addObject("total",page.getTotalPages());
+        modelAndView.addObject("page",page);
         modelAndView.addObject("currencies",currencyCodes);
         modelAndView.addObject("rates",rates);
         modelAndView.addObject("accounts",currentUser.getAccounts());
