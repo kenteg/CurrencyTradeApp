@@ -57,7 +57,8 @@
         <thead>
         <tr>
             <c:forEach var="rate" items="${rates}">
-            <th><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
+                <c:set var="color" value="${rate.currency1}/${rate.currency2}color" />
+            <th bgcolor="<c:out value="${color}"/>"><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
             </c:forEach>
         </tr>
         </thead>

@@ -43,6 +43,7 @@ public class DynamicExchangeRates {
                 if((curRate-fdelta)<0){
                     return;
                 }
+            rate.setOld_rate(rate.getRate());
             rate.setRate(curRate-fdelta);
             rate.setReverse_rate(1/rate.getRate());
                 }

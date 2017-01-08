@@ -16,6 +16,9 @@ public class User {
     @Column (name = "hashpass")
     private String password;
 
+    @Column(name = "firstlogin")
+    private boolean firstlogin;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Account> accounts = new ArrayList<>();
 
@@ -61,6 +64,14 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public boolean getFirstlogin() {
+        return firstlogin;
+    }
+
+    public void setFirstlogin(boolean firstlogin) {
+        this.firstlogin = firstlogin;
     }
 
     public String getPassword() {
