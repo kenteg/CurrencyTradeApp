@@ -94,7 +94,6 @@ public class TradeController {
         return modelAndView;
     }
 
-
     @RequestMapping(value = "/rates",method = RequestMethod.GET,produces = "application/json")
     public  @ResponseBody List<ExchangeRate> allRates(){
         return exchangeRateRepository.findAll();

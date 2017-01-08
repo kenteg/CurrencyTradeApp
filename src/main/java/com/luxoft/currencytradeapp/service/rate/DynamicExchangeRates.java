@@ -28,7 +28,7 @@ public class DynamicExchangeRates {
     }
 
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelayString = "#{propsbean.interval}")
     @Transactional
     public void ChangeRates(){
         List<ExchangeRate> rates = exchangeRateRepository.findAll();

@@ -5,9 +5,11 @@ package com.luxoft.currencytradeapp.config;
  *         created Декабрь 18 2016
  */
 import com.luxoft.currencytradeapp.service.user.UserDetailsServiceImpl;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -44,4 +46,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         return new UserDetailsServiceImpl();
     }
 
+
+    @Bean
+    public PropertiesFactoryBean propsbean() {
+        PropertiesFactoryBean bean = new PropertiesFactoryBean();
+        bean.setLocation(new ClassPathResource("props.properties"));
+        return bean;
+    }
 }
