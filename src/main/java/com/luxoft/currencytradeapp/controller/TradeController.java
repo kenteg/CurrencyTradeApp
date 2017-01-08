@@ -6,6 +6,7 @@ package com.luxoft.currencytradeapp.controller;
 
 import com.luxoft.currencytradeapp.dao.ExchangeRateRepository;
 import com.luxoft.currencytradeapp.dao.OperationRepository;
+import com.luxoft.currencytradeapp.entity.Account;
 import com.luxoft.currencytradeapp.entity.ExchangeRate;
 import com.luxoft.currencytradeapp.entity.Operation;
 import com.luxoft.currencytradeapp.entity.User;
@@ -13,7 +14,11 @@ import com.luxoft.currencytradeapp.exceptions.ExchangeRateNotFoundException;
 import com.luxoft.currencytradeapp.exceptions.NotEnoughFundsException;
 import com.luxoft.currencytradeapp.service.trade.ExchangeService;
 import com.luxoft.currencytradeapp.service.user.UserService;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -28,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.enterprise.inject.Produces;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +49,9 @@ public class TradeController {
     ExchangeRateRepository exchangeRateRepository;
     private final
     OperationRepository operationRepository;
+    private @Value("#{propsbean.default_rur_balance}") String rur_balance;
+    private @Value("#{propsbean.default_eur_balance}") String eur_balance;
+    private @Value("#{propsbean.default_usd_balance}") String usd_balance;
 
 
     @Autowired
@@ -57,7 +66,24 @@ public class TradeController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("trade");
         User currentUser = userService.getUser(principal.getName());
+        initBalances(currentUser);
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
+
+
+        for(ExchangeRate rate:rates){
+            if(rate.getOld_rate()>rate.getRate()){
+                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","red");
+            }
+            else
+            if (rate.getOld_rate()<rate.getRate()){
+                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","green");
+                }
+            else
+            if (rate.getOld_rate()==rate.getRate()){
+                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","grey");
+            }
+        }
+
         Set<String> currencyCodes = new HashSet<>();
         for(ExchangeRate rate:rates){
             currencyCodes.add(rate.getCurrency1());
@@ -99,5 +125,13 @@ public class TradeController {
         return exchangeRateRepository.findAll();
     }
 
-
+    @Transactional
+    private void initBalances(User currentuser){
+        if(currentuser.getFirstlogin()){
+            currentuser.getAccounts().get(0).setBalance(Money.of(CurrencyUnit.of("RUR"),new BigDecimal(this.rur_balance)));
+            currentuser.getAccounts().get(1).setBalance(Money.of(CurrencyUnit.of("EUR"),new BigDecimal(this.eur_balance)));
+            currentuser.getAccounts().get(2).setBalance(Money.of(CurrencyUnit.of("USD"),new BigDecimal(this.usd_balance)));
+            currentuser.setFirstlogin(false);
+        }
+    }
 }
