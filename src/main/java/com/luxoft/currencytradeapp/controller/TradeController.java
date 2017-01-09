@@ -63,31 +63,9 @@ public class TradeController {
         User currentUser = userService.getUser(principal.getName());
         initBalances(currentUser);
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
-
-        Map<String,String> colors = new HashMap<>();
-        for(ExchangeRate rate:rates){
-            if(rate.getOld_rate()>rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","red");
-                colors.put(rate.getCurrency1()+rate.getCurrency2(),"red");
-            }
-            else
-            if (rate.getOld_rate()<rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","green");
-                colors.put(rate.getCurrency1()+rate.getCurrency2(),"green");
-            }
-            else
-            if (rate.getOld_rate()==rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","grey");
-                colors.put(rate.getCurrency1()+rate.getCurrency2(),"grey");
-            }
-        }
-
-        Set<String> currencyCodes = new HashSet<>();
-        for(ExchangeRate rate:rates){
-            currencyCodes.add(rate.getCurrency1());
-            currencyCodes.add(rate.getCurrency2());
-        }
-        if (pageNum==null) {pageNum=1;};
+        Map<String, String> colors = getRateColorsMap(rates);
+        Set<String> currencyCodes = getCodesNoRepeat(rates);
+        if (pageNum==null) {pageNum=1;}
         PageRequest pagReq = new PageRequest(pageNum-1,20, Sort.Direction.DESC,"Id");
         Page page = operationRepository.findAll(pagReq);
         modelAndView.addObject("currentpage",pageNum);
@@ -122,6 +100,33 @@ public class TradeController {
     @RequestMapping(value = "/rates",method = RequestMethod.GET,produces = "application/json")
     public  @ResponseBody List<ExchangeRate> allRates(){
         return exchangeRateRepository.findAll();
+    }
+
+    private Set<String> getCodesNoRepeat(List<ExchangeRate> rates) {
+        Set<String> currencyCodes = new HashSet<>();
+        for(ExchangeRate rate:rates){
+            currencyCodes.add(rate.getCurrency1());
+            currencyCodes.add(rate.getCurrency2());
+        }
+        return currencyCodes;
+    }
+
+    private Map<String, String> getRateColorsMap(List<ExchangeRate> rates) {
+        Map<String,String> colors = new HashMap<>();
+        for(ExchangeRate rate:rates){
+            if(rate.getOld_rate()>rate.getRate()){
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"red");
+            }
+            else
+            if (rate.getOld_rate()<rate.getRate()){
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"green");
+            }
+            else
+            if (rate.getOld_rate()==rate.getRate()){
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"grey");
+            }
+        }
+        return colors;
     }
 
     @Transactional
