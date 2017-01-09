@@ -32,7 +32,10 @@ public class DynamicExchangeRates {
     @Transactional
     public void ChangeRates(){
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
+        generateAndChangeRates(rates);
+    }
 
+    private void generateAndChangeRates(List<ExchangeRate> rates) {
         for(ExchangeRate rate:rates){
             float curRate = rate.getRate();
             float plusminus = rnd.nextFloat();
@@ -42,7 +45,7 @@ public class DynamicExchangeRates {
             if(plusminus < 0.5){
                 if((curRate-fdelta)<0){
                     return;
-                }
+                        }
             rate.setOld_rate(rate.getRate());
             rate.setRate(curRate-fdelta);
             rate.setReverse_rate(1/rate.getRate());

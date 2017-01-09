@@ -39,12 +39,25 @@ public class ExchangeService {
         Account accSell = findAccountByCurrency(currentUser,currencySell);
         Account accBuy = findAccountByCurrency(currentUser,currencyBuy);
         float rate = findExchangeRate(currencyBuy,currencySell);
+        Money withdraw = withdrawFromAccount(currencySell, amount, accSell, rate);
+        depositOnAccount(currencyBuy, amount, accBuy);
+        writeNewOperation(currentUser, currencyBuy, currencySell, amount, rate, withdraw);
+    }
+
+    private void writeNewOperation(User currentUser, String currencyBuy, String currencySell, String amount, float rate, Money withdraw) {
+        Operation currentOperation = new Operation(currencyBuy,currencySell,amount,withdraw.getAmount().toString(),String.valueOf(rate));
+        currentUser.getOperations().add(currentOperation);
+    }
+
+    private void depositOnAccount(String currencyBuy, String amount, Account accBuy) {
+        accBuy.deposit(Money.of(CurrencyUnit.getInstance(currencyBuy),new BigDecimal(amount)));
+    }
+
+    private Money withdrawFromAccount(String currencySell, String amount, Account accSell, float rate) throws NotEnoughFundsException {
         Money withdraw = Money.of(CurrencyUnit.getInstance(currencySell),new BigDecimal(amount));
         withdraw=withdraw.multipliedBy(rate, RoundingMode.HALF_EVEN);
         accSell.withdraw(withdraw);
-        accBuy.deposit(Money.of(CurrencyUnit.getInstance(currencyBuy),new BigDecimal(amount)));
-        Operation currentOperation = new Operation(currencyBuy,currencySell,amount,withdraw.getAmount().toString(),String.valueOf(rate));
-        currentUser.getOperations().add(currentOperation);
+        return withdraw;
     }
 
     private float findExchangeRate(String cur1, String cur2) throws ExchangeRateNotFoundException {
