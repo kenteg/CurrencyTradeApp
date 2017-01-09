@@ -25,19 +25,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.enterprise.inject.Produces;
 import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/trade")
@@ -69,18 +64,21 @@ public class TradeController {
         initBalances(currentUser);
         List<ExchangeRate> rates = exchangeRateRepository.findAll();
 
-
+        Map<String,String> colors = new HashMap<>();
         for(ExchangeRate rate:rates){
             if(rate.getOld_rate()>rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","red");
+                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","red");
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"red");
             }
             else
             if (rate.getOld_rate()<rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","green");
-                }
+                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","green");
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"green");
+            }
             else
             if (rate.getOld_rate()==rate.getRate()){
-                modelAndView.addObject(rate.getCurrency1()+'/'+rate.getCurrency2()+"color","grey");
+                modelAndView.addObject(rate.getCurrency1()+rate.getCurrency2()+"color","grey");
+                colors.put(rate.getCurrency1()+rate.getCurrency2(),"grey");
             }
         }
 
@@ -98,6 +96,7 @@ public class TradeController {
         modelAndView.addObject("currencies",currencyCodes);
         modelAndView.addObject("rates",rates);
         modelAndView.addObject("accounts",currentUser.getAccounts());
+        modelAndView.addObject("colors",colors);
         return modelAndView;
     }
 

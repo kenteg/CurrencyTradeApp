@@ -20,9 +20,9 @@
 <body>
 <h3>Ваш логин: <sec:authentication property="principal.username" /></h3>
 <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
-<p><b>User accounts:</b></p>
 
     <table class="table-bordered">
+        <caption class="caption">User accounts:</caption>
         <thead>
         <tr>
             <th>Currency</th>
@@ -51,14 +51,14 @@
 <p><c:out value="${exception}"/> </p>
 
 <br>
-<p><b>Exchange Rates: </b></p>
 
-    <table class="table">
+    <table class="table" border="3px">
+        <caption class="caption">Exchange Rates:</caption>
         <thead>
         <tr>
             <c:forEach var="rate" items="${rates}">
-                <c:set var="color" value="${rate.currency1}/${rate.currency2}color" />
-            <th bgcolor="<c:out value="${color}"/>"><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
+                <c:set var="cur" value="${rate.currency1}${rate.currency2}"/>
+            <th bgcolor="${colors[cur]}"><c:out value="${rate.currency1}/${rate.currency2}"/> </th>
             </c:forEach>
         </tr>
         </thead>
