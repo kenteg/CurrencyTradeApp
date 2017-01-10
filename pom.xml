@@ -176,6 +176,14 @@
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
+        <configuration>
+          <url>http://localhost:8080/currencytradeapp</url>
+          <server>my-tomcat</server>
+          <path>/myapp</path>
+          <update>true</update>
+          <username>admin</username>
+          <password>password</password>
+        </configuration>
       </plugin>
     </plugins>
   </build>
